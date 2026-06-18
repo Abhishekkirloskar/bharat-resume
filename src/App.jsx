@@ -300,9 +300,23 @@ function Hero({ onPlay, onInfo }) {
           <a
             href={RESUME_PDF}
             download
-            className="flex items-center gap-2 border border-white/40 text-white font-semibold px-6 md:px-8 py-2.5 rounded hover:bg-white/10 transition-colors"
+            className="group flex items-center gap-2.5 bg-white/10 backdrop-blur border border-white/30 text-white font-semibold px-6 md:px-8 py-2.5 rounded hover:bg-white/20 hover:border-white/60 transition-colors"
           >
-            ⬇ Résumé
+            <svg
+              viewBox="0 0 24 24"
+              className="w-5 h-5 transition-transform group-hover:translate-y-0.5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M12 3v12" />
+              <path d="m7 12 5 5 5-5" />
+              <path d="M5 21h14" />
+            </svg>
+            Résumé
           </a>
         </div>
       </div>
