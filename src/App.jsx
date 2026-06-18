@@ -3,15 +3,17 @@ import { playTudum, unlockAudio } from './sound'
 
 // public/ assets resolve against Vite's base path (works on GitHub Pages too)
 const asset = (f) => `${import.meta.env.BASE_URL}photos/${f}`
+const RESUME_PDF = `${import.meta.env.BASE_URL}Bharat-Banavalikar-Resume.pdf`
 const PHOTO = {
   portrait: asset('bharat-2.jpeg'),
-  // billboard slideshow — these rotate in the hero
+  // billboard slideshow — each photo has its own focal point so the subject
+  // stays in frame when the hero is cropped (especially on narrow phones)
   hero: [
-    asset('bharat-hero.jpeg'),
-    asset('bharat-3.jpeg'),
-    asset('bharat-4.jpeg'),
-    asset('bharat-5.jpeg'),
-    asset('bharat-2.jpeg'),
+    { src: asset('bharat-hero.jpeg'), pos: '50% 32%' },
+    { src: asset('bharat-3.jpeg'), pos: '38% 62%' },
+    { src: asset('bharat-4.jpeg'), pos: '50% 48%' },
+    { src: asset('bharat-5.jpeg'), pos: '50% 40%' },
+    { src: asset('bharat-2.jpeg'), pos: '55% 42%' },
   ],
 }
 
@@ -255,13 +257,17 @@ function Hero({ onPlay, onInfo }) {
       {/* backdrop */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#3a0d12] via-[#141414] to-black" />
       {/* billboard slideshow on the right — crossfades, brightens & zooms on hover */}
-      {PHOTO.hero.map((src, i) => (
+      {PHOTO.hero.map((photo, i) => (
         <img
-          key={src}
-          src={src}
+          key={photo.src}
+          src={photo.src}
           alt="Bharat Banavalikar"
           aria-hidden={i !== idx}
-          className={`absolute right-0 top-0 h-full w-full md:w-[60%] object-cover object-[50%_30%] transition-all duration-1000 group-hover:scale-105 group-hover:brightness-110 ${
+          decoding="async"
+          loading={i === 0 ? 'eager' : 'lazy'}
+          fetchpriority={i === 0 ? 'high' : 'low'}
+          style={{ objectPosition: photo.pos }}
+          className={`absolute right-0 top-0 h-full w-full md:w-[60%] object-cover transition-all duration-1000 group-hover:scale-105 group-hover:brightness-110 ${
             i === idx ? 'opacity-100' : 'opacity-0'
           }`}
         />
@@ -291,6 +297,13 @@ function Hero({ onPlay, onInfo }) {
           <button onClick={onInfo} className="flex items-center gap-2 bg-gray-500/40 text-white font-semibold px-6 md:px-8 py-2.5 rounded hover:bg-gray-500/30 transition-colors">
             ⓘ More Info
           </button>
+          <a
+            href={RESUME_PDF}
+            download
+            className="flex items-center gap-2 border border-white/40 text-white font-semibold px-6 md:px-8 py-2.5 rounded hover:bg-white/10 transition-colors"
+          >
+            ⬇ Résumé
+          </a>
         </div>
       </div>
 

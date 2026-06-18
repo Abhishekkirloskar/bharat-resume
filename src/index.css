@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap');
-
+/* Fonts are loaded via <link> in index.html (preconnected) for faster paint */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -173,3 +172,18 @@ body {
 ::-webkit-scrollbar-track { background: #141414; }
 ::-webkit-scrollbar-thumb { background: #333; border-radius: 5px; }
 ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+/* Respect users who prefer reduced motion (and save battery on low-power
+   devices): pause the continuous ambient animations. Intro/transitions
+   still play but are kept brief. */
+@media (prefers-reduced-motion: reduce) {
+  .anim-gradient,
+  .float-icon,
+  .grid-overlay,
+  .tudum-bar {
+    animation: none !important;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
+}
